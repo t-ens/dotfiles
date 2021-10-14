@@ -1,11 +1,21 @@
 #!/bin/bash
 
+SETUP_SHELL=0
 UPDATE_FILES=1
 UPDATE_GIT=1
 INIT_GIT=1
-INSTALL_FONT=0
+INSTALL_FONT=1
 
 GIT=`dirname "$(readlink -f "$0")"`
+PM="sudo apt install"
+
+if [ "$SETUP_SHELL" -eq 0 ]
+then
+  echo "Install ZSH using your package manager."
+  read -n 1 -s -r -p "Press any key to continue.."
+  chsh -s /bin/zsh $USER
+fi
+
 
 if [ "$UPDATE_FILES" -eq 0 ]
 then
@@ -14,6 +24,12 @@ then
   IFS=$'\n' #newline only separator
   for file in $(cat < in_home)
   do
+    path=${file/$(basename $file)/""}
+    echo $path
+    if [ ! -d "/home/$USER/$path" ]
+    then
+      echo "mkdir -p "/home/$USER/$path""
+    fi
     rsync -r $GIT/$file $HOME/$file
   done
 fi
