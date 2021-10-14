@@ -100,10 +100,9 @@ then
   for file in $(cat < in_home)
   do
     path=${file/$(basename $file)/""}
-    echo $path
     if [ ! -d "/home/$USER/$path" ]
     then
-      echo "mkdir -p "/home/$USER/$path""
+      mkdir -p "/home/$USER/$path"
     fi
     rsync -r $GIT/$file $HOME/$file
   done
