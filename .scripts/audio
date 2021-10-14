@@ -1,0 +1,12 @@
+#!/bin/sh
+
+#Convert to a usable script at some point in my life
+
+#Convert mkv to mp3 
+for ii in *.mkv; do ffmpeg -i "$ii" "`basename $ii .mkv`.mp3"; done
+#Should combine with the following to embed cover as metadata
+for ii in *.mp3; do ffmpeg -i $ii -i cover.jpg -map_metadata 0 -map 0 -map 1 -acodec copy Fragiles/$ii; done
+
+#Reads metadataa from filename of the form ##-Title.fmt WARNING! Not robust, assumes no periods in title etc
+for ii in *.mp3; id3 -t "`echo $ii | cut -f 2 -d -| cut -f       1 -d .`" $ii;
+

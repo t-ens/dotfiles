@@ -1,0 +1,42 @@
+#!/bin/sh
+
+#Just in case this breaks something, /etc/hosts is below
+
+##
+## /etc/hosts: static lookup table for host names
+##
+#
+##<ip-address>   <hostname.domain.org>   <hostname>
+#127.0.0.1       localhost.localdomain   T300LA  
+#::1             localhost.localdomain   T300LA
+#132.245.77.18   outlook.office365.com 
+##
+## End of file
+
+
+#newip=`getent hosts outlook.office365.com | awk '{print $1; exit}'`
+#newip=`ping -c 1 outlook.office365.com | grep -Eo -m 1 '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'`
+
+if [ -e /tmp/hosts ]; 
+then 
+  rm /tmp/hosts
+fi
+
+while read line
+do
+  if [[ $line == *outlook.office365.com* ]]; 
+  then 
+    echo ""
+  else
+    echo $line >> /tmp/hosts
+  fi
+done < "/etc/hosts"
+
+rm /etc/hosts
+cp /tmp/hosts /etc/hosts
+
+newip=`ping -c 1 outlook.office365.com | grep -Eo -m 1 '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'`
+
+echo -e $newip "    outlook.office365.com" >> /etc/hosts
+rm /tmp/hosts
+

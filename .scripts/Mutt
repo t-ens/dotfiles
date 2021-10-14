@@ -1,0 +1,10 @@
+#!/bin/sh
+
+while [ 1 ]
+do
+  sudo outlookHostName >> /dev/null
+  sleep 5m
+done &
+
+/usr/bin/mutt
+pkill -f Mutt

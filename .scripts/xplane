@@ -1,0 +1,40 @@
+#!/bin/bash
+
+if [[ $# -eq 0 ]] 
+then
+    echo "Must supply an action"
+    exit 1
+fi
+
+while getopts "cp" opt
+do 
+  case $opt in
+  c)
+    from="/home/travis/.steam/steam/steamapps/common/X-Plane 11"
+    to="/home/travis/.X-Plane 11"
+
+    if [ ! -d "$to" ]
+    then
+      echo "Creating temporary folder"
+      mkdir "$to"
+      mkdir "$to"/Resources
+      mkdir "$to"/Resources/plugins
+      mkdir "$to"/"Custom Scenery"
+    else
+      echo "Temporary folder already exists"
+      echo "Delete if it is safe to and rerun."
+      exit 1
+    fi
+    ;;
+  p)
+    to="/home/travis/.steam/steam/steamapps/common/X-Plane 11"
+    from="/home/travis/.X-Plane 11"
+    ;;
+  *)
+    exit 1
+    ;;
+  esac
+done
+
+mv "$from"/Resources/plugins/xgs "$to"/Resources/plugins/xgs
+mv "$from"/Resources/plugins/opentrack.xpl "$to"/Resources/plugins/opentrack.xpl

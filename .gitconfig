@@ -1,0 +1,11 @@
+[user]
+	email = ens.travis@gmail.com
+	name = Travis Ens
+[core]
+	editor = vim
+[merge]
+	tool = vimdiff
+[color]
+	ui = auto
+[pull]
+	rebase = false

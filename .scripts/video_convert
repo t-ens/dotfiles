@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for filename in /media/travis/WDE/Recording/WRC/2021/Kenya/*.mp4; do
+  base=${filename%".mp4"}
+  ffmpeg -i "$base.mp4" -i "$base.flac" -c:v copy -c:a copy "$base-converted.mkv"
+done

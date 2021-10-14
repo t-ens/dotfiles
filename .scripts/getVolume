@@ -1,0 +1,14 @@
+#!/bin/sh
+str=`amixer -c 1 sget Master`
+
+str1=${str#Simple*\[*\[*\[}
+v1=${str1%*]}
+
+if [ $v1 == on ]
+then
+  str2=${str#Simple*\[};
+  v2=${str2%%%*]};
+  echo $v2;
+else
+  echo "0"
+fi

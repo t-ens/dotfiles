@@ -1,0 +1,117 @@
+# Secrets
+# Decrypting and then sourcing our secrets file containing all personal
+# information that will then be available to our individual account config files.
+# Sourcing a file in this muttrc is equivalent to appending to the file itself.
+source "gpg -dq $HOME/.mutt/accounts/secrets.gpg |"
+
+
+# General Settings
+set editor                  = "vim +':set textwidth=0' +':set wrapmargin=0' +':set wrap'"
+set header_cache            = "$HOME/.cache"
+set imap_keepalive          = 300
+set imap_passive            = no
+set imap_check_subscribed   = yes
+set imap_idle               = yes
+set mail_check              = 60
+set mbox_type               = Maildir
+set sort                    = threads
+set sort_aux                = reverse-last-date-received
+set reverse_name            = yes
+set reverse_realname        = yes
+set wait_key                = no
+set delete                  = yes
+set alias_file              = ~/.mutt/aliases
+set sort_alias              = alias
+set reverse_alias           = yes
+source $HOME/.mutt/zenburn.muttrc
+color index yellow default "~v~(!~N)~(!~F)" # collapsed thread with no New or Flagged
+color index red     default "~v~(~F)~(!~N)"  # collapsed thread with Flagged but no New
+color index green   default "~v~(~N)"        # collapsed thread with New
+
+
+# Handle HTML
+# Prefer text if available but auto view HTML as a second choice.
+set mailcap_path            = "$HOME/.mutt/mailcap"
+auto_view text/html
+alternative_order text/plain text/html
+
+# Create a macro to open the selected email when viewed on the 'Attachments'
+# screen. "O" will save the HTML in cache and open it in your default GUI
+# web browser, determined by the enviroment variable $BROWSER.
+macro attach 'O' "<pipe-entry>iconv -c --to-code=UTF8 > $HOME/.cache/mail.html<enter><shell-escape>qutebrowser $HOME/.cache/mail.html<enter>"
+
+
+# Status Bar
+set status_chars  = " *%A"
+#set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+ set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?u? (%u unread)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+
+# Sidebar
+set sidebar_visible         = yes
+set sidebar_width           = 20
+set sidebar_delim_chars     = "/"
+set sidebar_short_path      = yes
+set sidebar_folder_indent   = yes
+set sidebar_next_new_wrap   = yes
+set mail_check_stats
+macro index b '<enter-command>toggle sidebar_visible<enter><refresh>'
+macro pager b '<enter-command>toggle sidebar_visible<enter><redraw-screen>'
+bind index,pager \Cp sidebar-prev
+bind index,pager \CP sidebar-page-up
+bind index,pager \Co sidebar-open
+bind index,pager \CN sidebar-page-down
+bind index,pager \Cn sidebar-next
+
+
+# SSL & Certs
+# Force strong SSL and disable system certs. Force manual approval of all
+# certs used.
+set ssl_force_tls           = yes
+set ssl_starttls            = yes
+#set ssl_use_sslv2           = no
+set ssl_use_sslv3           = no
+set ssl_use_tlsv1           = no
+set ssl_use_tlsv1_1         = no
+set ssl_use_tlsv1_2         = no
+set ssl_use_tlsv1_3         = yes
+set ssl_verify_dates        = yes
+set ssl_verify_host         = yes
+#unset ssl_usesystemcerts
+set certificate_file        = "$HOME/.mutt/certs/certificates"
+
+
+# Default account - Select on startup.
+source "$HOME/.mutt/accounts/account-00"
+source $alias_file
+
+
+# Folder hooks for all accounts. Can be changed or added to but a hook is
+# required for each account.
+folder-hook "account-00" "source $HOME/.mutt/accounts/account-00"
+folder-hook "account-01" "source $HOME/.mutt/accounts/account-01"
+
+
+# Macros for changing between accounts. Using F5-F8 here for four accounts, can
+# be changed, added to, or removed all together if only using one account.
+macro index,pager <F5> '<sync-mailbox><enter-command>source $HOME/.mutt/accounts/account-00<enter><change-folder>!<enter>'
+macro index,pager <F6> '<sync-mailbox><enter-command>source $HOME/.mutt/accounts/account-01<enter><change-folder>!<enter>'
+
+
+# Bind "G" to fetch imap on demand. Set to auto fetch every minute in General
+# Settings above but can be manually fetched anytime with this.
+bind index "G" imap-fetch-mail
+
+
+# Other binds to make mutt behave more like Vim, optional.
+bind pager j next-line
+bind pager k previous-line
+bind attach,index,pager \CD next-page
+bind attach,index,pager \CU previous-page
+bind pager g top
+bind pager G bottom
+bind attach,index g first-entry
+bind attach,index G last-entry
+
+
+# vim:ft=muttrc

@@ -1,0 +1,3 @@
+#!/bin/sh
+export SWT_GTK3=0 tuxguitar
+cd /usr/share/tuxguitar && exec ./tuxguitar.sh "$@"

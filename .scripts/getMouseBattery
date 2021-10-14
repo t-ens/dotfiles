@@ -1,0 +1,10 @@
+#!/bin/sh
+
+#Correct power table
+#https://www.spinics.net/lists/linux-input/msg70450.html
+
+full=4206000
+empty=3636000
+now=`cat /sys/class/power_supply/hidpp_battery_0/voltage_now`
+
+echo $(( (100*($now-$empty))/($full-$empty) ))

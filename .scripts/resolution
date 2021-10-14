@@ -1,0 +1,16 @@
+#!/bin/bash
+
+while getopts sd opt
+do 
+  case $opt in
+  s)
+    xrandr --output eDP-1 --mode 1400x1050
+    xrandr --output eDP-1 --mode 1920x1080
+    /home/travis/.fehbg
+    ;;
+  d)
+    xrandr --output eDP-1 --mode 1920x1080 --output HDMI-1 --right-of eDP-1 --mode 2560x1080
+    /home/travis/.fehbg
+    ;;
+  esac
+done

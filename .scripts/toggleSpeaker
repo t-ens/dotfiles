@@ -1,0 +1,10 @@
+#!/bin/sh
+
+current=`amixer -c 1 sget "Auto-Mute Mode" | awk '$1 == "Item0:" {print $2}'`
+
+if [ $current = "'Enabled'" ]
+then
+  amixer -c 1 sset "Auto-Mute Mode" Disabled
+else
+  amixer -c 1 sset "Auto-Mute Mode" Enabled
+fi

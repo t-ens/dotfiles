@@ -1,0 +1,14 @@
+#!/bin/sh
+
+while getopts "S:" opt
+do
+  case $opt in
+  S)
+    arg=${OPTARG}
+    ;;
+  esac
+done
+
+touch /home/travis/.scripts/.previewRunning
+zathura $arg
+rm /home/travis/.scripts/.previewRunning

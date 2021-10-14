@@ -1,0 +1,15 @@
+#!/bin/sh
+
+for ii in {1..139}
+do
+  if [ -e output$ii.pdf ]
+  then 
+    files="$files output$ii.pdf";
+  fi
+done
+echo $files
+
+convert -define registry:temporary-path=/home/travis/temp -density 600 $files test.pdf
+
+
+#gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dFirstPage=1 -dLastPage=10 -sOutputFile=output.pdf input.pdf

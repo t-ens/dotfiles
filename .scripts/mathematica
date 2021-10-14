@@ -1,0 +1,4 @@
+xrdb /home/travis/.XresourcesMathematica
+/usr/local/bin/mathematica &
+sleep 2s
+xrdb /home/travis/.Xresources

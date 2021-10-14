@@ -1,0 +1,19 @@
+#!/bin/sh
+
+chmod 644 /sys/class/backlight/intel_backlight/brightness
+current=`cat /sys/class/backlight/intel_backlight/brightness`
+min=0
+
+if [ $(($current-10)) -gt 0 ] 
+then
+  new=$(($current-10))
+else
+  new=0
+fi
+
+echo Current: $current
+echo Min: $max
+echo New:$new
+
+echo $new > /sys/class/backlight/intel_backlight/brightness
+chmod 444 /sys/class/backlight/intel_backlight/brightness

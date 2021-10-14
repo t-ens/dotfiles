@@ -1,0 +1,47 @@
+#!/bin/sh
+root=/home/travis/documents/notebook
+dir=pwd
+while getopts cp opt
+do
+  case $opt in
+  c)
+    year=`date '+%Y'`
+    month=`date '+%m'`
+    day=`date '+%d'`
+    
+    if [ -e $root/daily/$year/$month/$day ]
+    then 
+      echo "The folder already exists for todays date"
+    else
+      if [ ! -e $root/daily/$year ]; then mkdir $root/daily/$year; fi
+      if [ ! -e $root/daily/$year/$month ]; then mkdir $root/daily/$year/$month; fi
+      mkdir $root/daily/$year/$month/$day
+      cat $root/daily.tex >> $root/daily/$year/$month/$day/$year.$month.$day.tex
+    fi
+    ;;
+  p)
+    touch $root/main.tex
+    cat $root/preamble.tex > $root/main.tex
+    echo "" >> $root/main.tex 
+    cat $root/readinglist.tex >> $root/main.tex
+    echo "\begin{document}" >> $root/main.tex
+    echo "" >> $root/main.tex
+    echo "\begin{multicols}{2}" >> $root/main.tex
+    echo "" >> $root/main.tex
+    
+    #Add in the latex code for my daily 
+    for file in $root/daily/????/??/??/????.??.??.tex
+    do
+      echo "\header{$(basename $file .tex)}" >> $root/main.tex
+      cat $file >> $root/main.tex
+      echo "" >> $root/main.tex
+    done
+    
+    echo "" >> $root/main.tex
+    echo "\end{multicols}" >> $root/main.tex
+    echo "\end{document}" >> $root/main.tex
+    ;;
+    esac
+done
+  
+  

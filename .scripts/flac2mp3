@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ -e flac2mp3 ]
+then
+  echo "The flac2mp3 folder already exists. Aborting.";
+else
+  mkdir flac2mp3
+  for inname in *.flac ; 
+  do
+    outname=`basename -s .flac "$inname"`.mp3
+    ffmpeg -i "$inname" -ab 320k -map_metadata 0 -id3v2_version 3 flac2mp3/"$outname";
+  done
+fi
+

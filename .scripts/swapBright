@@ -1,0 +1,14 @@
+#!/bin/sh
+
+chmod 644 /sys/class/backlight/intel_backlight/brightness
+current=`cat /sys/class/backlight/intel_backlight/brightness`
+
+if [ $(($current)) -eq 0 ] 
+then
+  new=500
+else
+  new=0
+fi
+
+echo $new > /sys/class/backlight/intel_backlight/brightness
+chmod 444 /sys/class/backlight/intel_backlight/brightness

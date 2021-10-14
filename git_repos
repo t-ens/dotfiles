@@ -1,0 +1,5 @@
+.zsh_plugins/powerlevel10k https://github.com/romkatv/powerlevel10k.git
+.zsh_plugins/zsh-history-substring-search https://github.com/zsh-users/zsh-history-substring-search.git
+.vim/pack/plugins/start/asyncrun.vim https://github.com/skywind3000/asyncrun.vim.git
+.vim/pack/plugins/start/nerdtree https://github.com/preservim/nerdtree.git
+.vim/pack/plugins/start/vim-tmux-navigator https://github.com/christoomey/vim-tmux-navigator.git

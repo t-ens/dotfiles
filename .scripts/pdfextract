@@ -1,0 +1,35 @@
+#!/bin/sh
+
+
+jj=1
+
+for ii in {1..6}
+do
+  gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dFirstPage=$ii -dLastPage=$ii -sOutputFile=output$ii.pdf temp.pdf
+done
+
+for ii in {7..139}
+do
+  if [ $jj -eq 1 ]; 
+  then
+    jj=0;
+    echo $ii;
+    gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dFirstPage=$ii -dLastPage=$ii -sOutputFile=output$ii.pdf temp.pdf
+  else 
+    jj=1;
+  fi
+done
+
+for ii in {1..139}
+do
+  if [ -e output$ii.pdf ]
+  then 
+    files="$files output$ii.pdf";
+  fi
+done
+echo $files
+
+convert -density 600 $files test.pdf
+
+
+#gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dFirstPage=1 -dLastPage=10 -sOutputFile=output.pdf input.pdf

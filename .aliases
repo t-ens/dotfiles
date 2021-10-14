@@ -1,0 +1,17 @@
+alias ls='ls --color=auto'
+alias mutt="neomutt"
+alias mscore="/home/travis/code/source/MuseScore/builds/Linux-Qt-usr-Make-Release/install/bin/mscore"
+alias pts="~/code/source/phoronix-test-suite/phoronix-test-suite"
+alias pentab="/home/travis/Downloads/Linux_Pentablet_V1.2.13.1/Pentablet_Driver"
+alias mux="tmuxinator"
+alias rsync="rsync --progress"
+alias virsh="sudo virsh"
+alias vls="virsh list --all"
+alias vstart="virsh start"
+alias vstop="virsh shutdown"
+alias virt-viewer="sudo virt-viewer"
+alias vview="virt-viewer --connect qemu:///session --wait"
+
+function search(){
+  grep -r $1 ~/.local/share/notekit
+}

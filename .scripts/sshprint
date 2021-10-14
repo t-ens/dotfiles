@@ -1,0 +1,31 @@
+#!/bin/sh
+printer="lwcam"   #Default printer is lwcam
+pages="-"
+eval file=\${$#}  #File is the last argument 
+
+while getopts "P:p:f:" opt 
+do
+  case $opt in
+  P)
+    printer=${OPTARG}
+    ;;
+  p)
+    pages=${OPTARG}
+    ;;
+  f)
+    file=${OPTARG}
+  esac
+done
+
+
+echo "Printing pages $pages of $file on printer $printer"
+
+if [ ! -e "$file" ]; 
+then
+  echo "Either your filename is invalid or you did not specify a file to be printed."
+else
+   scp "$file" "tens@coxeter.math.toronto.edu:/home/tens/.temp.pdf"
+   ssh tens@coxeter.math.toronto.edu "Print -2  -P$printer /home/tens/.temp.pdf"
+   #echo tens@coxeter.math.toronto.edu "Print -2  -P$printer -p$pages /home/tens/.temp.pdf"
+fi
+

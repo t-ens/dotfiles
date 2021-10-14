@@ -1,0 +1,52 @@
+!Configure urxvt
+
+URxvt.iso14755: False
+URxvt.perl-ext-common:        default,matcher
+URxvt.url-launcher:           firefox-dev
+URxvt.scrollBar: false
+URxvt.font:     xft:MesloLGS NF:size=10:antialias=true
+URxvt.boldFont: xft:MesloLGS NF:bold:size=10:antialias=true
+URxvt.shading: 30
+URxvt.internalBorder: 0
+
+!-----------------------------------------
+! URxvt settings with zenburn theme
+!-----------------------------------------
+! Catch ugly URLs
+! Zenburn color-scheme
+!URxvt*background: #3F3F3F
+URxvt*background: #2A2A2A
+URxvt*foreground: #DCDCCC
+URxvt*fading: 40
+URxvt*fadeColor: #2A2A2A
+URxvt*cursorColor: #DCDCCC
+URxvt*cursorColor2: #FFFFEF
+URxvt*colorUL: #8CD0D3
+URxvt*underlineColor: #F0DFAF
+URxvt*colorBD: #E0CF9F
+URxvt*colorIT: #656555
+
+!! black dark/light
+URxvt*color0: #3F3F3F
+URxvt*color8: #5F5F5F
+!! red dark/light
+URxvt*color1: #BC8383
+URxvt*color9: #CC9393
+!! green dark/light
+URxvt*color2: #5F7F5F
+URxvt*color10: #7F9F7F
+!! yellow dark/light
+URxvt*color3: #E0CF9F
+URxvt*color11: #F0DFAF
+!! blue dark/light
+URxvt*color4: #7CB8BB
+URxvt*color12: #8CD0D3
+!! magenta dark/light
+URxvt*color5: #DC8CC3
+URxvt*color13: #DC8CC3
+!! cyan dark/light
+URxvt*color6: #93E0E3
+URxvt*color14: #93E0E3
+!! white dark/light
+URxvt*color7: #DCDCCC
+URxvt*color15: #FFFFFF

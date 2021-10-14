@@ -1,0 +1,52 @@
+#/bin/sh
+
+#Removes the .tex extension from the filename, if it exists
+
+#strip off the path and extension
+name=$(basename $1 .tex)
+#just get the path up to the folder containing the tex file
+path="${1%/*}/"    #remove the shortest match of /* from the end
+                   #ie. get rid of everything after the last / 
+
+if [ -f "$path""notes.tex" ]
+then
+  name="notes"
+fi
+
+if [ -f "$path""main.tex" ]
+then
+  name="main"
+fi
+
+
+if [ -f "$path$name.tex" ]
+then
+  cd $path 
+  pdflatex --shell-escape $name.tex
+
+  if [ -f "sources.bib" ]
+  then
+    echo "HERE!!&&!!&&!!&&!!&&!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    bibtex $name
+    pdflatex --shell-escape $name.tex
+    pdflatex --shell-escape $name.tex
+  fi
+  
+  rm $name.log
+  
+  if [ ! -f /home/travis/.scripts/.previewRunning ]
+  then
+    (
+      if [ -f "$path$name.synctex.gz" ]
+      then
+        zathura --synctex-forward $name.pdf > /dev/null 2> /dev/null
+        #zathura -e preview $name.pdf > /dev/null 2> /dev/null
+      else
+        ZATHURA -S $name.pdf > /dev/null 2> /dev/null
+      fi
+    )&
+  fi
+else
+  echo "The file" $path$name".tex does not exist"
+  exit 1
+fi
