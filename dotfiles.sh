@@ -68,7 +68,7 @@ then
     name=$(basename $full_dir)
     base_dir=${full_dir%/*}
     url=${line#*" "}
-    if [ -! -d "$full_dir" ]
+    if [ ! -d "$full_dir" ]
     then
       mkdir -p "/home/$USER/$base_dir"
       cd /home/$USER/$base_dir
