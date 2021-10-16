@@ -5,7 +5,13 @@
 # Receive
 set imap_user = $my_email_00
 set imap_authenticators = "oauthbearer"
-set imap_oauth_refresh_command = "curl --silent --request POST --data 'client_id=$my_client_id_00' --data 'client_secret=$my_client_secret_00' --data 'refresh_token=$my_refresh_token_00' --data 'grant_type=refresh_token' https://accounts.google.com/o/oauth2/token | jq --raw-output '.access_token'"
+#set imap_oauth_refresh_command = "curl --silent --request POST --data 'client_id=$my_client_id_00' --data 'client_secret=$my_client_secret_00' --data 'refresh_token=$my_refresh_token_00' --data 'grant_type=refresh_token' https://accounts.google.com/o/oauth2/token | jq --raw-output '.access_token'"
+set imap_oauth_refresh_command="$HOME/.mutt/oauth2.py \
+    --quiet \
+    --user=$my_email_00 \
+    --client_id=$my_client_id_00 \
+    --client_secret=$my_client_secret_00 \
+    --refresh_token=$my_refresh_token_00"
 set folder = "imaps://$my_email_00@imap.gmail.com:993"
 set spoolfile = "+INBOX"
 set postponed = "+[Gmail]/Drafts"
