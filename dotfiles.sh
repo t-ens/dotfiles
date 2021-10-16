@@ -104,6 +104,6 @@ then
     then
       mkdir -p "/home/$USER/$path"
     fi
-    rsync -r $GIT/$file $HOME/$file
+    rsync -r --progress $GIT/$file $HOME/$path/
   done
 fi
