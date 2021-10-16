@@ -11,6 +11,7 @@ alias vstart="virsh start"
 alias vstop="virsh shutdown"
 alias virt-viewer="sudo virt-viewer"
 alias vview="virt-viewer --connect qemu:///session --wait"
+alias tails="sudo qemu-system-x86_64 -enable-kvm -cpu host -smp 4 -m 8192 -cdrom /home/travis/ISOs/tails-amd64-4.23.iso"
 
 function search(){
   grep -r $1 ~/.local/share/notekit
