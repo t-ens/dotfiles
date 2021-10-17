@@ -1,10 +1,20 @@
-#!/bin/sh
+#!/bin/bash
 
-#Correct power table
+#Power table taken from
 #https://www.spinics.net/lists/linux-input/msg70450.html
 
-full=4206000
-empty=3554000
-now=`cat /sys/class/power_supply/hidpp_battery_0/voltage_now`
+now="$(cat /sys/class/power_supply/hidpp_battery_0/voltage_now)"
 
-echo $(( (100*($now-$empty))/($full-$empty) ))
+IFS=$'\n'
+for line in $(tac "$HOME/.scripts/.Logitech_g703_battery_levels")
+do
+  volt="$(bc -l <<< "1000000*${line%%" "*}")"
+  voltint="${volt%%.*}"
+  if [ "$now" -lt "$voltint" ]
+  then
+    echo "${line#*" "}"
+    exit 0
+  fi
+done
+exit 1
+
