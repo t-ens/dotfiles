@@ -10,4 +10,4 @@
 .Xresources
 .zshrc
 .vim/colors/zenburn.vim
-.config/sway/config
+.config/sway

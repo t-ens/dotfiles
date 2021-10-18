@@ -46,9 +46,9 @@ fi
 if [ "$INSTALL_FONT" -eq 0 ]
 then
   echo "Installing Meslo Nerd Font patched for Powerlevel10k"
-  mkdir -p "/home/$USER/.local/share/fonts/truetype/MesloLG NF"
+  mkdir -p "$HOME/.local/share/fonts/truetype/MesloLG NF"
   cur_dir=$(pwd)
-  cd "/home/$USER/.local/share/fonts/truetype/MesloLG NF"
+  cd "$HOME/.local/share/fonts/truetype/MesloLG NF"
   wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
   wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
   wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
@@ -60,7 +60,7 @@ fi
 if [ "$INIT_GIT" -eq 0 ]
 then
   echo "Cloning git repositories..."
-  IFS=$'\n'
+  IFS=$'\n' #newline only separator
   for line in $(cat < git_repos)
   do 
     cur_dir=$(pwd)
@@ -70,11 +70,11 @@ then
     url=${line#*" "}
     if [ ! -d "$full_dir" ]
     then
-      mkdir -p "/home/$USER/$base_dir"
-      cd /home/$USER/$base_dir
+      mkdir -p "$HOME/$base_dir"
+      cd $HOME/$base_dir
       git clone $url
     fi
-    cd $cur_dir
+    cd "$cur_dir"
   done
 fi
 
@@ -87,24 +87,23 @@ then
     cur_dir=$(pwd)
     dir=${line%" "*}
     url=${line#*" "}
-    cd "/home/$USER/$dir"
+    cd "$HOME/$dir"
     git pull
-    cd $cur_dir
+    cd "$cur_dir"
   done
 fi
 
 if [ "$UPDATE_FILES" -eq 0 ]
 then
   echo "Copying files and folders to home directory..."
-  ### copy files/folders
-  IFS=$'\n' #newline only separator
+  IFS=$'\n'
   for file in $(cat < in_home)
   do
-    path=${file/$(basename $file)/""}
-    if [ ! -d "/home/$USER/$path" ]
+    path=${file/%$(basename $file)/""}
+    if [ ! -d "$HOME/$path" ]
     then
-      mkdir -p "/home/$USER/$path"
+      mkdir -p "$HOME/$path"
     fi
-    rsync -r --progress $GIT/$file $HOME/$path/
+    rsync -r --progress $GIT/$file $HOME/$path
   done
 fi
