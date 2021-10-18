@@ -74,6 +74,7 @@ then
       cd /home/$USER/$base_dir
       git clone $url
     fi
+    cd $cur_dir
   done
 fi
 
