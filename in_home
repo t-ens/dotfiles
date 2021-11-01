@@ -11,3 +11,5 @@
 .zshrc
 .vim/colors/zenburn.vim
 .config/sway
+.config/qutebrowser
+.local/share/qutebrowser
