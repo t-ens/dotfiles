@@ -1,0 +1,5 @@
+#!/bin/bash
+
+FILENAME=/home/travis/.playlist.m3u
+
+echo $1 >> $FILENAME

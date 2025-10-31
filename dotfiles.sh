@@ -1,19 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-SETUP_SHELL=1
+INSTALL_PACKAGES=1
 UPDATE_FILES=1
 UPDATE_GIT=1
 INIT_GIT=1
 INSTALL_FONT=1
 
-GIT=`dirname "$(readlink -f "$0")"`
-PM="sudo apt install"
-
-while getopts asfuim opt
+while getopts asfuimp opt
 do
   case $opt in 
     a)
-      SETUP_SHELL=0
+      INSTALL_PACKAGES=0
       UPDATE_FILES=0
       INIT_GIT=0
       INSTALL_FONT=0
@@ -33,14 +30,27 @@ do
     m)
       INSTALL_FONT=0
       ;;
+    p)
+      INSTALL_PACKAGES=0
+      ;;
   esac
 done
 
-if [ "$SETUP_SHELL" -eq 0 ]
+if [ "$INSTALL_PACKAGES" -eq 0 ]
 then
-  echo "Install ZSH using your package manager."
-  read -n 1 -s -r -p "Press any key to continue.."
-  chsh -s /bin/zsh $USER
+  info=$(uname -a)
+  if [ -n "$(echo $info | grep arch)" ]
+  then
+    INSCMD="sudo pacman --noconfirm -S"
+  elif [ -n "$(echo $info | grep cachyos)" ]
+  then
+    INSCMD="sudo pacman --noconfirm -S"
+  elif [ -n "$(echo $info | grep omv)" ]
+  then
+    INSCMD="sudo dnf --assumeyes install"
+  fi
+  $INSCMD git kitty neovim qutebrowser tmux zsh
+  sudo chsh -s /bin/zsh $USER
 fi
 
 if [ "$INSTALL_FONT" -eq 0 ]
@@ -76,6 +86,20 @@ then
     fi
     cd "$cur_dir"
   done
+
+  # Manual install of zenburn theme since the git repo needs to be copied
+  git clone https://github.com/phha/zenburn.nvim.git /tmp/zenburn.nvim
+  if [ ! -d "$HOME/.config/nvim/lua" ]
+  then
+    mkdir -p "$HOME/.config/nvim/lua"
+  fi
+  cp -r /tmp/zenburn.nvim/lua/zenburn "$HOME/.config/nvim/lua/zenburn"
+  if [ ! -d "$HOME/.config/nvim/colors" ]
+  then
+    mkdir -p "$HOME/.config/nvim/colors"
+  fi
+  cp /tmp/zenburn.nvim/colors/zenburn.lua "$HOME/.config/nvim/colors/zenburn.lua"
+  rm -rf "/tmp/zenburn.nvim"
 fi
 
 if [ "$UPDATE_GIT" -eq 0 ]
@@ -91,19 +115,34 @@ then
     git pull
     cd "$cur_dir"
   done
+
+  # Manual install of zenburn theme since the git repo needs to be copied
+  git clone https://github.com/phha/zenburn.nvim.git /tmp/zenburn.nvim
+  if [ ! -d "$HOME/.config/nvim/lua" ]
+  then
+    mkdir -p "$HOME/.config/nvim/lua"
+  fi
+  cp -r /tmp/zenburn.nvim/lua/zenburn "$HOME/.config/nvim/lua/zenburn"
+  if [ ! -d "$HOME/.config/nvim/colors" ]
+  then
+    mkdir -p "$HOME/.config/nvim/colors"
+  fi
+  cp /tmp/zenburn.nvim/colors/zenburn.lua "$HOME/.config/nvim/colors/zenburn.lua"
+  rm -rf "/tmp/zenburn.nvim"
 fi
 
 if [ "$UPDATE_FILES" -eq 0 ]
 then
   echo "Copying files and folders to home directory..."
   IFS=$'\n'
-  for file in $(cat < in_home)
+  for file in $(find . -name git_repos -o -name dotfiles.sh -o -path ./.git -prune -o -type f -print)
   do
     path=${file/%$(basename $file)/""}
-    if [ ! -d "$HOME/$path" ]
+    target=$HOME/${path:2}
+    if [ ! -d "$target" ]
     then
-      mkdir -p "$HOME/$path"
+      mkdir -p "$target"
     fi
-    rsync -r --progress $GIT/$file $HOME/$path
+    rsync -r --progress "$file" "$target"
   done
 fi

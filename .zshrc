@@ -4,10 +4,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 export EDITOR=vim
-export TERM="xterm-256color"
-export PATH=$PATH:~/.scripts/:~/documents/notebook/scripts:~/.local/bin:/opt/rocm/bin:/opt/rocm/rocprofiler/bin:/opt/rocm/opencl/bin:~/code/source/sage/local/bin:/home/travis/code/source/opentrack/build/install/bin
-export PYTHONPATH=$PYTHONPATH:/home/travis/code/temp
-
 export HISTFILE=~/.zsh_history
 export HISTSIZE=50000
 export SAVEHIST=10000
@@ -36,6 +32,3 @@ bindkey '^[OB' history-substring-search-down
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
-
-# Finalize Powerlevel10k instant prompt. Should stay at the bottom of ~/.zshrc.
-(( ! ${+functions[p10k-instant-prompt-finalize]} )) || p10k-instant-prompt-finalize
