@@ -252,5 +252,6 @@ for_window [app_id="EDITPLAYLIST"] floating enable
 for_window [app_id="org.kde.kdeconnect"] floating enable
 for_window [class="scrcpy"] floating enable, sticky enable
 for_window [app_id="mpv"] floating enable, sticky enable, set width 480 px height 270 px
+for_window [app_id="virt-viewer"] floating enable
 
 include /etc/sway/config.d/*
