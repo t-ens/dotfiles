@@ -100,6 +100,10 @@ then
   fi
   cp /tmp/zenburn.nvim/colors/zenburn.lua "$HOME/.config/nvim/colors/zenburn.lua"
   rm -rf "/tmp/zenburn.nvim"
+
+  # Manual installation steps for Thumbfast in MPV
+  ln -s "$HOME/.config/mpv/scripts/thumbfast/thumbfast.lua" "$HOME/.config/mpv/scripts/thumbfast/main.lua"
+  curl -o "$HOME/.config/mpv/scripts/osc.lua" 'https://raw.githubusercontent.com/po5/thumbfast/refs/heads/vanilla-osc/player/lua/osc.lua'
 fi
 
 if [ "$UPDATE_GIT" -eq 0 ]
@@ -129,6 +133,10 @@ then
   fi
   cp /tmp/zenburn.nvim/colors/zenburn.lua "$HOME/.config/nvim/colors/zenburn.lua"
   rm -rf "/tmp/zenburn.nvim"
+
+  # Manual update steps for Thumbfast in MPV
+  ln -s "$HOME/.config/mpv/scripts/thumbfast/thumbfast.lua" "$HOME/.config/mpv/scripts/thumbfast/main.lua"
+  curl -o "$HOME/.config/mpv/scripts/osc.lua" 'https://raw.githubusercontent.com/po5/thumbfast/refs/heads/vanilla-osc/player/lua/osc.lua'
 fi
 
 if [ "$UPDATE_FILES" -eq 0 ]
