@@ -1,0 +1,76 @@
+@import "theme.css";
+
+#waybar {
+	background-color: @outline;
+}
+#waybar > box {
+	margin: 4px;
+	background-color: @main-bg;
+}
+
+tooltip {
+	border: 2px solid @main-br;
+	border-radius: 10px;
+	background-color: @main-bg;
+}
+tooltip > box {
+	padding: 0 6px;
+}
+
+#workspaces button {
+	border-radius: 16px;
+	min-width: 16px;
+	padding: 0 10px;
+}
+#workspaces button.focused label {
+	color: @red;
+}
+
+#idle_inhibitor {
+	font-size: large;
+}
+
+/*----States----*/
+
+/* hover */
+#idle_inhibitor:hover,
+#network:hover,
+#wireplumber:hover {
+	color: @hover-fg;
+}
+
+/* disabled */
+#idle_inhibitor.deactivated {
+	color: @hover-fg;
+}
+
+/* warning */
+#cpu.warning {
+	color: @warning;
+}
+
+/* critical */
+#temperature.critical,
+#memory.critical,
+#cpu.critical,
+#battery.critical {
+	color: @critical;
+}
+
+/*----Typeface----*/
+
+* {
+	font-family: "MesloLGS NF";
+	font-weight: bold;
+	font-size: 14px;
+	color: @main-fg;
+}
+
+#window label,
+tooltip label {
+	font-weight: normal;
+}
+
+#workspaces button.active label {
+	font-size: 23px;
+}

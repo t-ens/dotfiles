@@ -1,0 +1,126 @@
+// -*- mode: jsonc -*-
+{
+	// "layer": "top", // Waybar at top layer
+	// "position": "bottom", // Waybar position (top|bottom|left|right)
+	"height": 24, // Waybar height (to be removed for auto height)
+	"spacing": 8, // Gaps between modules (4px)
+	// Choose the order of the modules
+	"modules-left": [
+		"sway/workspaces",
+		"sway/mode",
+		"sway/scratchpad",
+	],
+	"modules-center": [
+		"sway/window"
+	],
+	"modules-right": [
+		"idle_inhibitor",
+		"wireplumber",
+		"network",
+		"power-profiles-daemon",
+		"cpu",
+		"memory",
+		"clock",
+		"tray",
+		"custom/notification"
+	],
+	"keyboard-state": {
+		"numlock": true,
+		"capslock": true,
+		"format": "{name} {icon} ",
+		"format-icons": {
+			"locked": "",
+			"unlocked": ""
+		},
+		"on-click": "/home/travis/code/source/wvkbd_FearlessSpiff/wvkbd-desktop -L 200",
+		"on-click-right": "pkill wvkbd-desktop"
+	},
+	"sway/mode": {
+	    "format": "<span style=\"italic\">{}</span>"
+	},
+	"sway/scratchpad": {
+	    "format": "{icon} {count}",
+	    "show-empty": false,
+	    "format-icons": ["", ""],
+	    "tooltip": true,
+	    "tooltip-format": "{app}: {title}"
+	},
+	"sway/window": {
+		"format": "{app_id} [{shell}]"
+	},
+	"idle_inhibitor": {
+	    "format": " {icon} ",
+	    "format-icons": {
+	        "activated": "  ",
+	        "deactivated": "  "
+	    }
+	},
+	"tray": {
+		"icon-size": 18,
+		"spacing": 5,
+	},
+	"clock": {
+		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+		"format-alt": "{:%Y-%m-%d}",
+		"calendar": {
+			"mode": "month",
+			"mode-mon-col": 3,
+			"weeks-pos": "right",
+			"format": {
+				"months": "<span color='#ffead3'><b>{}</b></span>",
+				"days": "<span color='#ecc6d9'><b>{}</b></span>",
+				"weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+				"weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+				"today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+			}
+		},
+		"actions":  {
+			"on-click-right": "mode",
+			"on-scroll-up": "shift_up",
+			"on-scroll-down": "shift_down"
+		}
+	},
+	"cpu": {
+	    "format": "{usage}%  ",
+	    "tooltip": false,
+	},
+	"memory": {
+		"format": "{}% "
+	},
+	"network": {
+		"format-wifi": "{essid} ({signalStrength}%)  ",
+		"format-ethernet": "{ipaddr}/{cidr}  ",
+		"tooltip-format": "{ifname} via {gwaddr}  ",
+		"format-linked": "{ifname} (No IP)  ",
+		"format-disconnected": "Disconnected ⚠ ",
+		"format-alt": "{ifname}: {ipaddr}/{cidr}"
+	},
+	"wireplumber": {
+		"format": "{volume}% {node_name} {icon}",
+		"format-muted": "",
+		"on-click": "wpctl set-default 61",
+		"on-click-right": "wpctl clear-default",
+		"on-click-middle": "echo 'select E8:9C:25:5D:C4:CA\nconnect DC:69:E2:99:4A:A0' | bluetoothctl",
+		"format-icons": ["", "", ""]
+	},
+	"custom/notification": {
+		"tooltip": false,
+		"format": "{icon}",
+		"format-icons": {
+			"notification": "<span foreground='red'><sup></sup></span>",
+			"none": "",
+			"dnd-notification": "<span foreground='red'><sup></sup></span>",
+			"dnd-none": "",
+			"inhibited-notification": "<span foreground='red'><sup></sup></span>",
+			"inhibited-none": "",
+			"dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+			"dnd-inhibited-none": ""
+		},
+		"return-type": "json",
+		"exec-if": "which swaync-client",
+		"exec": "swaync-client -swb",
+		"on-click": "swaync-client -t -sw",
+		"on-click-right": "swaync-client -d -sw",
+		"escape": true
+	}
+}
