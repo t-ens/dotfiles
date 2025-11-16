@@ -153,4 +153,8 @@ then
     fi
     rsync -r --progress "$file" "$target"
   done
+
+  # Choose GTK theme
+  gsettings set org.gnome.desktop.interface gtk-theme Breeze
+  gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 fi
