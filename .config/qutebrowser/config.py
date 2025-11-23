@@ -1,3 +1,7 @@
+import os
+
+config_path = os.environ['HOME'] + '/.config/qutebrowser/'
+
 config.load_autoconfig(False)
 
 config.set(
@@ -21,6 +25,7 @@ config.set(
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/resource-abuse.txt",
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/privacy.txt",
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters.txt",
+        config_path + 'adblock_filters.txt',
     ]
 )
 
@@ -45,9 +50,13 @@ config.set('colors.webpage.darkmode.threshold.background', 0)
 config.set('colors.webpage.darkmode.threshold.foreground', 256)
 
 # Use MPV for videos
-config.bind(',m', 'spawn umpv {url}')
-config.bind(',M', 'hint links spawn umpv {hint-url}')
-config.bind(';M', 'hint --rapid links spawn umpv {hint-url}')
+config.bind(',m', 'spawn mpv {url}')
+config.bind(',M', 'hint links spawn mpv {hint-url}')
+config.bind(';M', 'hint --rapid links spawn mpv {hint-url}')
+
+config.bind(',u', 'spawn umpv {url}')
+config.bind(',U', 'hint links spawn umpv {hint-url}')
+config.bind(';U', 'hint --rapid links spawn umpv {hint-url}')
 
 # Aliases
 c.aliases['proxy-mitm'] = 'set content.proxy http://127.0.0.1:8080/'
