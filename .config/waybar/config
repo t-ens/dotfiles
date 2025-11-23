@@ -16,6 +16,7 @@
 	"modules-right": [
 		"idle_inhibitor",
 		"wireplumber",
+		"upower",
 		"network",
 		"power-profiles-daemon",
 		"cpu",
@@ -102,6 +103,10 @@
 		"on-click-right": "wpctl clear-default",
 		"on-click-middle": "echo 'select E8:9C:25:5D:C4:CA\nconnect DC:69:E2:99:4A:A0' | bluetoothctl",
 		"format-icons": ["", "", ""]
+	},
+	"upower": {
+		"native-path": "/org/bluez/hci0/dev_DC_69_E2_99_4A_A0",
+		"hide-if-empty": true,
 	},
 	"custom/notification": {
 		"tooltip": false,
