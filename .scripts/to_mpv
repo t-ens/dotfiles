@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Only keep initial 43 characters in YouTube URL
+#
+# MPV watch-later will identify a video using md5sum of URL so having other URL
+# segments can result in a video starting from beginning again.
+
+CMD=mpv
+while getopts 'e:' OPTION; do
+	case "$OPTION" in
+		e)
+			CMD="$OPTARG"
+			;;
+	esac
+done
+shift $((OPTIND - 1))
+
+URL=$(echo "$1" | cut -c1-43)
+
+$CMD "$URL"

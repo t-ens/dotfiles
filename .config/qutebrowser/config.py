@@ -50,13 +50,13 @@ config.set('colors.webpage.darkmode.threshold.background', 0)
 config.set('colors.webpage.darkmode.threshold.foreground', 256)
 
 # Use MPV for videos
-config.bind(',m', 'spawn mpv {url}')
-config.bind(',M', 'hint links spawn mpv {hint-url}')
-config.bind(';M', 'hint --rapid links spawn mpv {hint-url}')
+config.bind(',m', 'spawn to_mpv -e mpv {url}')
+config.bind(',M', 'hint links spawn to_mpv -e mpv {hint-url}')
+config.bind(';M', 'hint --rapid links spawn to_mpv -e mpv {hint-url}')
 
-config.bind(',u', 'spawn umpv {url}')
-config.bind(',U', 'hint links spawn umpv {hint-url}')
-config.bind(';U', 'hint --rapid links spawn umpv {hint-url}')
+config.bind(',u', 'spawn to_mpv -e umpv {url}')
+config.bind(',U', 'hint links spawn to_mpv -e umpv {hint-url}')
+config.bind(';U', 'hint --rapid links spawn to_mpv -e umpv {hint-url}')
 
 # Aliases
 c.aliases['proxy-mitm'] = 'set content.proxy http://127.0.0.1:8080/'
